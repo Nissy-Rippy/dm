@@ -1,0 +1,15 @@
+
+[1mFrom:[0m /home/ec2-user/environment/advanced_problem_8c/app/views/chats/show.html.erb:19 ActionView::CompiledTemplates#_app_views_chats_show_html_erb__2707726762905797427_69868059056480:
+
+    [1;34m14[0m:                 <% if chat.user_id == current_user.id %>
+    [1;34m15[0m:                 <tbody>
+    [1;34m16[0m:                   <tr>
+    [1;34m17[0m:                     <th>
+    [1;34m18[0m:                                             <% binding.pry %>
+ => [1;34m19[0m: 
+    [1;34m20[0m:                       <p style="text-align: left;"><%= chat.message %></p
+    [1;34m21[0m:                     </th>
+    [1;34m22[0m:                     <th></th>
+    [1;34m23[0m:                   </tr>
+    [1;34m24[0m:                 <% else %>
+
