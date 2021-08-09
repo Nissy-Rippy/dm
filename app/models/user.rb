@@ -2,6 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
+
   def follow(user_id)
       relationships.create(followed_id: user_id)
   end
@@ -24,17 +25,32 @@ class User < ApplicationRecord
   has_many :followers,through: :reverse_of_relationships,source: :follower
   has_many :relationships,class_name: "Relationship",foreign_key: "follower_id",dependent: :destroy
   has_many :followings,through: :relationships,source: :followed
-  
+
   has_many :books
-  
+
   has_many :group_users
   has_many :groups, through: :group_users
-  
-  
+
   has_many :favorites, dependent: :destroy
+   has_many :liked_posts, through: :favorites, source: :book
   has_many :book_comments, dependent: :destroy
   attachment :profile_image, destroy: false
 
   validates :name, length: { minimum: 2, maximum: 20 }, uniqueness: true
   validates :introduction, length: { maximum: 50 }
+
+
+def self.search(search,word)
+    if search == "forward_match"
+     @user = User.where("name LIKE?","#{word}%")
+    elsif search == "backward_match"
+     @user == User.where("name LIKE?","%#{word}")
+    elsif search == "perfect_match"
+    @user = User.where("#{word}")
+    elsif search == "partial_match"
+     @user == User.where("%#{word}%")
+    else
+     @user = User.all
+    end
+end
 end

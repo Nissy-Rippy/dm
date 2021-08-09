@@ -19,7 +19,7 @@ class GroupsController < ApplicationController
   end
 
   def new
-    @group = Group.new
+      @group = Group.new
   end
 
   def create
@@ -53,7 +53,7 @@ class GroupsController < ApplicationController
   private
 
   def group_params
-    params.require(:group).permit(:name, :introduction, :image)
+      params.require(:group).permit(:name, :introduction, :image)
   end
 
   def ensure_correct_user
