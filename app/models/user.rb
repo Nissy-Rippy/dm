@@ -32,7 +32,8 @@ class User < ApplicationRecord
   has_many :groups, through: :group_users
 
   has_many :favorites, dependent: :destroy
-   has_many :liked_posts, through: :favorites, source: :book
+  has_many :liked_posts, through: :favorites, source: :book
+  
   has_many :book_comments, dependent: :destroy
   attachment :profile_image, destroy: false
 

@@ -10,7 +10,7 @@ class BooksController < ApplicationController
   def index
      @books = Book.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
     
-    @book = Book.new
+     @book = Book.new
   end
 
   def create
@@ -29,7 +29,7 @@ class BooksController < ApplicationController
 
   def update
     if @book.update(book_params)
-      redirect_to book_path(@book), notice: "You have updated book successfully."
+       redirect_to book_path(@book), notice: "You have updated book successfully."
     else
       render "edit"
     end
