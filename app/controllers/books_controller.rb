@@ -8,14 +8,14 @@ class BooksController < ApplicationController
   end
 
   def index
-     @books = Book.includes(:liked_users).sort {|a,b| b.liked_users.size <=> a.liked_users.size}
-    
+     @categorys = Category.where(is_valid: true)
+    @q = Book.all.ransack(params[:q])
+    @books = @q.result(distinct: true)
      @book = Book.new
   end
 
   def create
-    @book = Book.new(book_params)
-    @book.user_id = current_user.id
+       @book = current_user.books.build(book_params)
     if @book.save
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
@@ -39,11 +39,19 @@ class BooksController < ApplicationController
     @book.destroy
     redirect_to books_path
   end
-
+  
+  def search
+    @categorys = Category.where(is_valid: true)
+    @category = Category.find(params[:id])
+    @q = @category.books.all.ransack(params[:q])
+    @notes = @q.result(distinct: true).page(params[:page])
+    @title = @category.name
+    render :index
+  end
   private
 
   def book_params
-    params.require(:book).permit(:title, :body)
+    params.require(:book).permit(:title, :body,:rate,:category_id)
   end
 
   def ensure_correct_user

@@ -1,5 +1,11 @@
 class Book < ApplicationRecord
   belongs_to :user
+  
+  validates :rate, presence: true
+  validates :rate, numericality: {
+    less_than_or_equal_to: 5,
+    greater_than_or_equal_to: 1,
+  }
   has_many :favorites, dependent: :destroy
   has_many :liked_users, through: :favorites, source: :user 
   has_many :book_comments, dependent: :destroy
